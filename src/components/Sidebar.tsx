@@ -1,44 +1,50 @@
-import React from 'react'
-import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { FaTimes } from 'react-icons/fa'
-import { links } from '../utils/constants'
-import styled from 'styled-components'
-import CartButtons from './CartButtons'
-import { log } from 'console'
+import React from "react";
+import logo from "../assets/logo.svg";
+import { Link } from "react-router-dom";
+import { useProductsContext } from "../context/products_context";
+import { FaTimes } from "react-icons/fa";
+import { links } from "../utils/constants";
+import styled from "styled-components";
+import CartButtons from "./CartButtons";
+import { log } from "console";
 // import { useUserContext } from '../context/user_context'
 
 const Sidebar = () => {
-  const {state,closeSidebar}=useProductsContext();
-  console.log('In Sidebar');
-  console.log(state);
- 
-    return <SidebarContainer>
-    <aside className={`${state?'sidebar ':'show-sidebar'}`}>
-  <div className="sidebar-header">
-    <img src={logo} alt="Comfy Sloth" />
-    <button className='close-btn' type='button' onClick={closeSidebar}>
-      <FaTimes />
-    </button>
-  </div>
-  <ul className="links">
-  {links.map((link)=>{
-            const {id,text,url}=link;
-            return(
+  const { isSidebarOpen, closeSidebar } = useProductsContext();
+  // console.log("In Sidebar");
+  // console.log(state);
+//const isOpen=true;
+console.log(" in Side bar " + isSidebarOpen);
+console.log(" in Side bar " + closeSidebar);
+
+  return (
+    <SidebarContainer>
+      <aside className={`${isSidebarOpen ?"sidebar show-sidebar": "sidebar"}`}>
+        <div className="sidebar-header">
+          <img src={logo} alt="Comfy Sloth" />
+          <button className="close-btn" type="button" onClick={closeSidebar}>
+         
+            <FaTimes />
+          </button>
+        </div>
+        <ul className="links">
+          {links.map((link) => {
+            const { id, text, url } = link;
+            return (
               <li key={id}>
                 <Link to={url}>{text}</Link>
               </li>
             );
           })}
           <li>
-            <Link to='/checkout'></Link>
+            <Link to="/checkout"></Link>
           </li>
-  </ul>
-  <CartButtons/>
-    </aside>
-  </SidebarContainer>
-}
+        </ul>
+        <CartButtons />
+      </aside>
+    </SidebarContainer>
+  );
+};
 
 const SidebarContainer = styled.div`
   text-align: center;
@@ -109,6 +115,6 @@ const SidebarContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
-export default Sidebar
+export default Sidebar;

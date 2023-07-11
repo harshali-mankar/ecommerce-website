@@ -6,8 +6,30 @@ import Error from './Error'
 import Loading from './Loading'
 import Product from './Product'
 
-const FeaturedProducts = () => {
-  return <h4>featured products</h4>
+const FeaturedProducts: React.FC = () => {
+  const { products_loading: loading, products_error: error, featured_products: featured } = useProductsContext();
+  if (loading) {
+    return <Loading />
+  }
+
+  if(error){
+    return <Error />
+  }
+  return (
+    <Wrapper className='section'>
+      <div className="title">
+        <h2>Featured Products</h2>
+        <div className="underline"></div>
+      </div>
+
+      <div className="section-center featured">
+        {featured.map((product:any)=>{
+          console.log(product)
+          return<Product />
+        })}
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`

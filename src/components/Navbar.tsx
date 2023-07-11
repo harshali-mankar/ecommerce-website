@@ -7,15 +7,12 @@ import { links } from "../utils/constants";
 import CartButtons from "./CartButtons";
 import { useProductsContext } from "../context/products_context";
 import Sidebar from "./Sidebar";
+import CheckoutPage from "../pages/CheckoutPage";
 // import { useUserContext } from '../context/user_context'
 
 const Nav: React.FC = () => {
-   const { state, openSidebar } = useProductsContext();
-  // console.log("In Navbar");
-  // console.log(state);
-  let showNavbar = true;
-  //showNavbar = state.isSidebarOpen;
-  if (showNavbar) {
+   const { isSidebarOpen, openSidebar } = useProductsContext();
+     
     return (
       <NavContainer>
         <div className="nav-center">
@@ -27,6 +24,7 @@ const Nav: React.FC = () => {
                 className="nav-toggle"
                 onClick={openSidebar}
               >
+                
                 <FaBars />
               </button>
             </Link>
@@ -41,14 +39,12 @@ const Nav: React.FC = () => {
               );
             })}
 
-            {/* <CartButtons /> */}
+            <CartButtons />
           </ul>
         </div>
       </NavContainer>
     );
-  } else {
-    <Sidebar />;
-  }
+  
 };
 
 const NavContainer = styled.nav`
