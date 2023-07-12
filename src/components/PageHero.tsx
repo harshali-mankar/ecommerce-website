@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom';
 
 interface PageHeroProps {
   title: string;
+  product:string;
 }
 
-const PageHero: FC<PageHeroProps> = ({ title }) => {
+const PageHero: FC<PageHeroProps> = ({ title,product }) => {
   return (
     <Wrapper>
       <div className='section-center'>
         <h3>
-          <Link to='/'>Home </Link>/{title}
+        <Link to='/'>Home </Link>
+          {product && <Link to='/products'>/ Products</Link>}/ {title}
         </h3>
       </div>
     </Wrapper>

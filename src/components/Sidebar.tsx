@@ -11,11 +11,9 @@ import { log } from "console";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useProductsContext();
-  // console.log("In Sidebar");
-  // console.log(state);
-//const isOpen=true;
-console.log(" in Side bar " + isSidebarOpen);
-console.log(" in Side bar " + closeSidebar);
+ 
+// console.log(" in Side bar " + isSidebarOpen);
+// console.log(" in Side bar " + closeSidebar);
 
   return (
     <SidebarContainer>

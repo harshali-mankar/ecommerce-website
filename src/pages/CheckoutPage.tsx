@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const CheckoutPage = () => {
   return <Wrapper>
-<PageHero title='checkout'/>
+<PageHero title='checkout' product=''/>
   </Wrapper>
 }
 const Wrapper = styled.div``

@@ -1,4 +1,4 @@
-import { log } from "console";
+
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -12,31 +12,58 @@ import {
 
 const products_reducer = (state: any, action: any) => {
   if (action.type === SIDEBAR_OPEN) {
-    console.log(action);
+    //console.log(action);
     return { ...state, isSidebarOpen: true };
   }
   if (action.type === SIDEBAR_CLOSE) {
-    console.log(action);
+    //console.log(action);
 
     return { ...state, isSidebarOpen: false };
   }
+
+  //Action for all products
   if (action.type === GET_PRODUCTS_BEGIN) {
+    console.log(state)
     return { ...state, products_loading: true };
   }
   if (action.type === GET_PRODUCTS_SUCCESS) {
-    const feature_products = action.payload.filter(
+    const featured_products = action.payload.filter(
       (product: any) => product.featured === true
     );
+    //console.log(featured_products)
     return {
       ...state,
       products_loading: false,
       products: action.payload,
-      feature_products,
+      featured_products,
     };
   }
   if(action.type === GET_PRODUCTS_ERROR){
     return {...state,products_loading:false,products_error:true}
   }
+
+//actions for single product
+
+if (action.type === GET_SINGLE_PRODUCT_BEGIN) {
+  console.log(state)
+  return { ...state, 
+    single_product_loading: true,
+    single_product_error: false  };
+}
+if (action.type === GET_SINGLE_PRODUCT_SUCCESS) {
+  
+  return {
+    ...state,
+    single_product_loading: false,
+    
+    single_product:action.payload,
+  };
+}
+if(action.type === GET_SINGLE_PRODUCT_ERROR){
+  return {...state,single_product_loading:false,single_product_error:true}
+}
+
+
   // return state;
   throw new Error(`No Matching "${action.type}" - action type`);
 };

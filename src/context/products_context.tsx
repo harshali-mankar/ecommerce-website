@@ -18,8 +18,11 @@ interface Product {
   isSidebarOpen: boolean;
   products_loading:boolean;
   products_error:boolean;
-  products:[];
-  featured_products:[];
+  products:any;
+  featured_products:any;
+  single_product_loading:boolean;
+  single_product_error:boolean;
+  single_product:any;
 }
 
 const initialState: Product = {
@@ -28,6 +31,9 @@ const initialState: Product = {
   products_error:false,
   products:[],
   featured_products:[],
+  single_product_loading:false,
+  single_product_error:false,
+  single_product:[],
 }
 //create interface to bind the data
 interface ProductsContextType {
@@ -36,9 +42,13 @@ interface ProductsContextType {
   products_error:boolean;
   featured_products:any;
   products:any;
+  single_product_loading:boolean;
+  single_product_error:boolean;
+  single_product:any;
   openSidebar: () => void;
   closeSidebar: () => void;
   fetchProducts:()=>void;
+  singleProductFetch:(url:any)=>void;
 }
 
 const ProductsContext = createContext<ProductsContextType | null>(null);
@@ -68,6 +78,7 @@ const [data, setData] = useState([]);
     // console.log(res.data)
     // return setData(res.data)
     const products=res.data;
+    //console.log(products)
     dispatch({type:GET_PRODUCTS_SUCCESS,payload:products})
 
     }catch(error){
@@ -75,8 +86,25 @@ const [data, setData] = useState([]);
     }
   };
 
+
+  //function to fetch single product
+  const singleProductFetch=async(url:any)=>{
+    dispatch({type:GET_SINGLE_PRODUCT_BEGIN})
+    try{
+      const res = await axios.get(url)
+      const single_product=res.data;
+      dispatch({type:GET_SINGLE_PRODUCT_SUCCESS,payload:single_product})
+    }
+    catch(error){
+      dispatch({type:GET_SINGLE_PRODUCT_ERROR})
+    }
+  }
+
+
+  //Calling the method
   useEffect(() => {
     fetchProducts();
+   
   }, []);
   
 
@@ -85,7 +113,8 @@ const [data, setData] = useState([]);
       ...state,
      openSidebar,
       closeSidebar,
-      fetchProducts }}>
+      fetchProducts,
+      singleProductFetch }}>
       {children}
     </ProductsContext.Provider>
   )
