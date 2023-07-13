@@ -56,7 +56,7 @@ const SingleProductPage: React.FC = () => {
     images,
   } = product;
 
-  console.log(product);
+  console.log("Products from Single page" + product);
   return (
     <Wrapper>
       <PageHero title={name} product={product} />

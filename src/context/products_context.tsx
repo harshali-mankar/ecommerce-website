@@ -78,7 +78,8 @@ const [data, setData] = useState([]);
     // console.log(res.data)
     // return setData(res.data)
     const products=res.data;
-    //console.log(products)
+    
+   // console.log("Products in product context "+ products)
     dispatch({type:GET_PRODUCTS_SUCCESS,payload:products})
 
     }catch(error){

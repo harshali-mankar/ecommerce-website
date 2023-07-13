@@ -2,13 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import Product from './Product'
 
-const GridView = ({}) => {
+interface GridViewProd{
+  products: any[];
+}
+const GridView:React.FC <GridViewProd>=({products}) => {
+  
   return <Wrapper>
-    {/* <div>
+    <div className='products-container'>
       {products.map((product)=>{
 return <Product key={product.id}{...product} />
       })}
-    </div> */}
+    </div>
   </Wrapper>
 }
 

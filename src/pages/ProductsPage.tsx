@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Filters, ProductList, Sort, PageHero } from '../components'
 
-const ProductsPage = () => {
+const ProductsPage:React.FC = () => {
   return <main>
     <PageHero title='products' product=''/>
     <Wrapper className='page'>
@@ -10,7 +10,7 @@ const ProductsPage = () => {
         <Filters />
         <div>
           <Sort />
-          <ProductList />
+          <ProductList/>
         </div>
       </div>
 

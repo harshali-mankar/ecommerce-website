@@ -1,16 +1,26 @@
-import React from 'react'
-import { useFilterContext } from '../context/filter_context'
-import GridView from './GridView'
-import ListView from './ListView'
 
-const ProductList = () => {
-  //const { filtered_products: products } = useFilterContext()
+import { useFilterContext } from "../context/filter_context";
+import GridView from "./GridView";
+import ListView from "./ListView";
+import Sort from "./Sort";
+const ProductList= () => {
+  const { filtered_products: products ,grid_view} = useFilterContext();
+  //console.log("Values in product list ")
+  //console.log(products);
  
-  return <h3>Product List</h3>
-  // return 
-  // (
-  //   //<GridView products={products}>Product List</GridView>
-  // )
+if(products.length < 1){
+  return
+  (<h5 style={{textTransform:'none'}}>
+    Sorry, no products matched your search...
+  </h5>);
 }
 
-export default ProductList
+if(grid_view === false)
+{
+  return <ListView products={products} />;
+
+}
+  return <GridView products={products} />;
+};
+
+export default ProductList;
