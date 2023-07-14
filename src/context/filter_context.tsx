@@ -11,32 +11,31 @@ import {
   CLEAR_FILTERS,
 } from "../actions";
 import { useProductsContext } from "./products_context";
-import * as React from 'react';
+import * as React from "react";
 interface Props {
   children: React.ReactNode;
 }
-
 
 interface ContextProps {
   filtered_products: string[];
   all_products: string[];
   grid_view: boolean;
   sort: string;
-  filter:{
-    text:string;
-    company:string;
-    category:string;
-    color:string;
-    min_price:number;
-    max_price:number;
-    price:number;
-    shipping:boolean;
-  }
+  filter: {
+    text: string;
+    company: string;
+    category: string;
+    colors: string;
+    min_price: number;
+    max_price: number;
+    price: number;
+    shipping: boolean;
+  };
   setGridView: () => void;
   setListView: () => void;
   updateSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  updateFilters: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  clearFilters:()=>void;
+  updateFilters: (event: React.SyntheticEvent) => void;
+  clearFilters: () => void;
 }
 
 const initialState: ContextProps = {
@@ -44,21 +43,21 @@ const initialState: ContextProps = {
   all_products: [],
   grid_view: true,
   sort: "price-lowest",
-  filter:{
-    text:'aaa',
-    company:'all',
-    category:'all',
-    color:'all',
-    min_price:0,
-    max_price:0,
-    price:0,
-    shipping:false,
+  filter: {
+    text: "",
+    company: "all",
+    category: "all",
+    colors: "all",
+    min_price: 0,
+    max_price: 0,
+    price: 0,
+    shipping: false,
   },
   setGridView: () => {},
   setListView: () => {},
   updateSort: (e) => {},
-  updateFilters:(event)=>{},
-  clearFilters:()=>{},
+  updateFilters: (event) => {},
+  clearFilters: () => {},
 };
 
 const FilterContext = createContext<ContextProps>({
@@ -66,21 +65,21 @@ const FilterContext = createContext<ContextProps>({
   all_products: [],
   grid_view: true,
   sort: "price-lowest",
-  filter:{
-    text:'aaa',
-    company:'all',
-    category:'all',
-    color:'all',
-    min_price:0,
-    max_price:0,
-    price:0,
-    shipping:false,
+  filter: {
+    text: "",
+    company: "all",
+    category: "all",
+    colors: "all",
+    min_price: 0,
+    max_price: 0,
+    price: 0,
+    shipping: false,
   },
   setGridView: () => {},
   setListView: () => {},
   updateSort: (e) => {},
-  updateFilters:(event)=>{},
-  clearFilters:()=>{},
+  updateFilters: (event) => {},
+  clearFilters: () => {},
 });
 
 export const FilterProvider: React.FC<Props> = ({ children }) => {
@@ -92,8 +91,10 @@ export const FilterProvider: React.FC<Props> = ({ children }) => {
   }, [products]);
 
   useEffect(() => {
+    //console.log("calling useeffect for filters");
+    dispatch({ type: FILTER_PRODUCTS });
     dispatch({ type: SORT_PRODUCTS });
-  }, [products, state.sort]);
+  }, [products, state.filter, state.sort]);
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW });
@@ -105,20 +106,43 @@ export const FilterProvider: React.FC<Props> = ({ children }) => {
 
   const updateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    
+
     dispatch({ type: UPDATE_SORT, payload: value });
   };
 
-const updateFilters=(event: React.KeyboardEvent<HTMLInputElement>)=>{
-   // let name=event.target.;
-  
-   console.log("called update filter")
-  // console.log(aaa +" and value" +value)
-  //dispatch({type:UPDATE_FILTERS,payload:{aaa,value}})
+  const updateFilters = (event: React.SyntheticEvent) => {
+    let name: string | any = "";
+    let value: string | any = "";
 
-}
+    if (event.target instanceof HTMLInputElement) {
+      let element = event.target as HTMLInputElement;
+      name = element.name;
+      value = element.value;
+      if (name === "shipping") {
+        value = element.checked;
+      }
+    } else if (event.target instanceof HTMLButtonElement) {
+      let element = event.target as HTMLButtonElement;
+      name = element.name;
+      if (name === "category") {
+        value = element.textContent;
+      } else if (name === "colors") {
+        value = element.getAttribute("data-color");
+      }
+    } else if (event.target instanceof HTMLSelectElement) {
+      let element = event.target as HTMLSelectElement;
+      name = element.name;
+      value = element.value;
+    }
 
-const clearFilters=()=>{}
+    //console.log("called update filterr  -" + name + " " + value);
+
+    dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
+  };
+
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS })
+  };
   return (
     <FilterContext.Provider
       value={{

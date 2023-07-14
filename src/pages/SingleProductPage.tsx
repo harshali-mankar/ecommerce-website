@@ -56,7 +56,7 @@ const SingleProductPage: React.FC = () => {
     images,
   } = product;
 
-  console.log("Products from Single page" + product);
+  //console.log("Products from Single page" + product);
   return (
     <Wrapper>
       <PageHero title={name} product={product} />
@@ -84,7 +84,7 @@ const SingleProductPage: React.FC = () => {
             {company}
           </p>
           <hr />
-          {stock > 0 && <AddToCart />}
+          {stock > 0 && <AddToCart product={product}/>}
         </section>
       </div>
     </Wrapper>

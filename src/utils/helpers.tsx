@@ -8,4 +8,13 @@ export const formatPrice = (number:any) => {
 
 }
 
-export const getUniqueValues = () => {}
+
+export const getUniqueValues=(data:string[],type:any) => {
+    let unique = data.map((item) => item[type])
+    if (type === 'colors') {
+      unique = unique.flat()
+   }
+  //console.log("value in helpers " + unique);
+  
+    return ['all', ...new Set(unique)]
+}

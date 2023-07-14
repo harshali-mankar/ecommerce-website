@@ -8,7 +8,9 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions'
 
-const initialState = {}
+const initialState = {
+  
+}
 
 //const CartContext = React.createContext()
 
