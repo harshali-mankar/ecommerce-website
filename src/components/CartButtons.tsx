@@ -13,7 +13,7 @@ const CartButtons: React.FC = () => {
   const {closeSidebar} = useProductsContext();
   const {total_items, clearCart} = useCartContext();
   //const { loginWithRedirect, logout, myUser } = useUserContext();
-  const { loginWithRedirect, logout, myUser } = useUserContext() as User; // casting in user type
+  const { loginWithRedirect, logout, myUser } = useUserContext() as User; // casting in user type else it will te null from userContext
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
