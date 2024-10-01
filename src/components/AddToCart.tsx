@@ -6,16 +6,14 @@ import { useCartContext } from "../context/cart_context";
 import AmountButtons from "./AmountButtons";
 
 interface Product {
-  product:any;
-    }
+  product: any;
+}
 
-const AddToCart: React.FC< Product > = ({ product }) => {
-   const { addToCart} = useCartContext();
+const AddToCart: React.FC<Product> = ({ product }) => {
+  const { addToCart } = useCartContext();
   const { id, stock, colors } = product;
- // console.log( "in add to cart" + JSON.stringify((product)));
   const [mainColor, setMainColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
-//console.log("mainColor" + mainColor)
   const increase = () => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount + 1;
@@ -37,26 +35,26 @@ const AddToCart: React.FC< Product > = ({ product }) => {
   };
   return (
     <Wrapper>
-      <div className='colors'>
+      <div className="colors">
         <span>colors :</span>
         <div>
-          {colors.map((color:any, index:number) => {
+          {colors.map((color: any, index: number) => {
             return (
               <button
                 key={index}
                 style={{ background: color }}
                 className={`${
-                  mainColor === color ? 'color-btn active' : 'color-btn'
+                  mainColor === color ? "color-btn active" : "color-btn"
                 }`}
                 onClick={() => setMainColor(color)}
               >
                 {mainColor === color ? <FaCheck /> : null}
               </button>
-            )
+            );
           })}
         </div>
       </div>
-      <div className='btn-container'>
+      <div className="btn-container">
         <AmountButtons
           increase={increase}
           decrease={decrease}
@@ -64,61 +62,60 @@ const AddToCart: React.FC< Product > = ({ product }) => {
         />
 
         <Link
-          to='/cart'
-          className='btn'
+          to="/cart"
+          className="btn"
           onClick={() => addToCart(id, mainColor, amount, product)}
         >
           add to cart
         </Link>
       </div>
     </Wrapper>
-  )
-}
-  const Wrapper = styled.section`
-    margin-top: 2rem;
-    .colors {
-      display: grid;
-      grid-template-columns: 125px 1fr;
-      align-items: center;
-      margin-bottom: 1rem;
-      span {
-        text-transform: capitalize;
-        font-weight: 700;
-      }
-      div {
-        display: flex;
-      }
+  );
+};
+const Wrapper = styled.section`
+  margin-top: 2rem;
+  .colors {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    align-items: center;
+    margin-bottom: 1rem;
+    span {
+      text-transform: capitalize;
+      font-weight: 700;
     }
-    .color-btn {
-      display: inline-block;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      background: #222;
-      margin-right: 0.5rem;
-      border: none;
-      cursor: pointer;
-      opacity: 0.5;
+    div {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      svg {
-        font-size: 0.75rem;
-        color: var(--clr-white);
-      }
     }
-    .active {
-      opacity: 1;
+  }
+  .color-btn {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #222;
+    margin-right: 0.5rem;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      font-size: 0.75rem;
+      color: var(--clr-white);
     }
-    .btn-container {
-      margin-top: 2rem;
-    }
+  }
+  .active {
+    opacity: 1;
+  }
+  .btn-container {
+    margin-top: 2rem;
+  }
 
-    .btn {
-      margin-top: 1rem;
-      width: 140px;
-    }
-  `;
+  .btn {
+    margin-top: 1rem;
+    width: 140px;
+  }
+`;
 
- 
 export default AddToCart;

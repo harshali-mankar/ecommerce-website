@@ -7,8 +7,7 @@ import {
 } from "../actions";
 
 const cart_reducer = (state: any, action: any) => {
-
-//code to add cart data
+  //code to add cart data
 
   if (action.type === ADD_TO_CART) {
     const { id, color, amount, product } = action.payload;
@@ -18,8 +17,7 @@ const cart_reducer = (state: any, action: any) => {
         if (cartItem.id === id + color) {
           //if item already exist then update the amount (number)
           let newAmt = cartItem.amount + amount;
-          console.log("In Cart previous amount" + amount);
-          console.log("In Cart " + newAmt);
+
           if (newAmt > cartItem.max) {
             //check the item in stock
             newAmt = cartItem.max;
@@ -54,7 +52,6 @@ const cart_reducer = (state: any, action: any) => {
 
   //code to toggle amount of item
 
-
   if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
     const { id, value } = action.payload;
     const tempCart = state.cart.map((item: any) => {
@@ -86,9 +83,8 @@ const cart_reducer = (state: any, action: any) => {
     return { ...state, cart: [] };
   }
 
-
   //code to calculate the sub total and total amount
-  
+
   if (action.type === COUNT_CART_TOTALS) {
     const { total_items, total_cost } = state.cart.reduce(
       (total: any, cartItem: any) => {

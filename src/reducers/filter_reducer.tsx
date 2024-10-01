@@ -13,12 +13,12 @@ const filter_reducer = (state: any, action: any) => {
   if (action.type === LOAD_PRODUCTS) {
     let maxPrice = action.payload.map((products: any) => products.price);
     maxPrice = Math.max(...maxPrice);
-   
+
     return {
       ...state,
       all_products: [...action.payload],
       filtered_products: [...action.payload],
-      filter: { ...state.filter,max_price: maxPrice,price:maxPrice },
+      filter: { ...state.filter, max_price: maxPrice, price: maxPrice },
     };
   }
 
@@ -44,7 +44,6 @@ const filter_reducer = (state: any, action: any) => {
       );
     }
     if (sort === "price-highest") {
-      //console.log("in highest");
       tempProducts = tempProducts.sort(
         (curItem, NextItem) => NextItem.price - curItem.price
       );
@@ -70,11 +69,10 @@ const filter_reducer = (state: any, action: any) => {
   if (action.type === FILTER_PRODUCTS) {
     const { all_products } = state;
 
-    const { text, category, company, colors, price, shipping } = state.filter
-    //console.log(price)
+    const { text, category, company, colors, price, shipping } = state.filter;
     let tempProducts = [...all_products];
     //filtering
-// filter by text
+    // filter by text
     if (text) {
       tempProducts = tempProducts.filter((product) => {
         return product.name.toLowerCase().startsWith(text);
@@ -82,30 +80,31 @@ const filter_reducer = (state: any, action: any) => {
     }
 
     //filter by category
-    if (category !== 'all') {
+    if (category !== "all") {
       tempProducts = tempProducts.filter(
         (product) => product.category === category
-      )
+      );
     }
 
     //filter by color
-    if (colors !== 'all') {
+    if (colors !== "all") {
       tempProducts = tempProducts.filter((product) => {
-        return product.colors.find((c:any) => c === colors)
-      })
+        return product.colors.find((c: any) => c === colors);
+      });
     }
     // filter by price
-    tempProducts = tempProducts.filter((product) => product.price <= price)
-    
+    tempProducts = tempProducts.filter((product) => product.price <= price);
+
     // filter by shipping
     if (shipping) {
-      tempProducts = tempProducts.filter((product) => product.shipping === true)
+      tempProducts = tempProducts.filter(
+        (product) => product.shipping === true
+      );
     }
     return { ...state, filtered_products: tempProducts };
   }
 
   if (action.type === CLEAR_FILTERS) {
-
     return {
       ...state,
       filter: {
@@ -114,9 +113,9 @@ const filter_reducer = (state: any, action: any) => {
         company: "all",
         category: "all",
         colors: "all",
-        price:state.filter.max_price,
+        price: state.filter.max_price,
         shipping: false,
-      },  
+      },
     };
   }
   //return state

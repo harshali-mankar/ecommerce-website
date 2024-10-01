@@ -91,7 +91,6 @@ export const FilterProvider: React.FC<Props> = ({ children }) => {
   }, [products]);
 
   useEffect(() => {
-    //console.log("calling useeffect for filters");
     dispatch({ type: FILTER_PRODUCTS });
     dispatch({ type: SORT_PRODUCTS });
   }, [products, state.filter, state.sort]);
@@ -135,13 +134,11 @@ export const FilterProvider: React.FC<Props> = ({ children }) => {
       value = element.value;
     }
 
-    //console.log("called update filterr  -" + name + " " + value);
-
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
 
   const clearFilters = () => {
-    dispatch({ type: CLEAR_FILTERS })
+    dispatch({ type: CLEAR_FILTERS });
   };
   return (
     <FilterContext.Provider

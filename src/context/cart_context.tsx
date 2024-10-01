@@ -11,11 +11,11 @@ import {
 //function that checks whether item is already available in cart or not
 
 const getLocalStorage = () => {
-  let cart = localStorage.getItem('cart');
+  let cart = localStorage.getItem("cart");
   if (cart) {
-    return JSON.parse(localStorage.getItem('cart')|| '{}');  // use || '{}' because string value is getting assigned to null
+    return JSON.parse(localStorage.getItem("cart") || "{}"); // use || '{}' because string value is getting assigned to null
   } else {
-  return [];
+    return [];
   }
 };
 
@@ -36,8 +36,6 @@ const CartContext = React.createContext(initialState);
 
 export const CartProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
- // console.log(state);
-
 
   //function to add elements to cart
   const addToCart = (id: any, color: any, amount: any, product: any) => {
@@ -46,23 +44,22 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
 
   //function to remove element from cart
   const removeItem = (id: any) => {
-    dispatch({type:REMOVE_CART_ITEM,payload:id})
+    dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
 
   //function to clear cart
   const clearCart = () => {
-    dispatch({type:CLEAR_CART})
+    dispatch({ type: CLEAR_CART });
   };
 
   //function to toggle element from cart
   const toggleItem = (id: any, value: any) => {
-
-    dispatch({type:TOGGLE_CART_ITEM_AMOUNT,payload:{id,value}})
+    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
   };
 
   //store the cart data on laocalstorage
   useEffect(() => {
-    dispatch({type:COUNT_CART_TOTALS})
+    dispatch({ type: COUNT_CART_TOTALS });
     localStorage.setItem("cart", JSON.stringify(state.cart));
   }, [state.cart]);
 
